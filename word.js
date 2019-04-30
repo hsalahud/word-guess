@@ -1,8 +1,9 @@
 const Letter = require('./letter.js')
 
+
+//Word constructor
 function Word (word) {
     this.word = []
-    //this.wordDisplay = []
     this.populateWord = _ => {
         word.split('').forEach(letter => {
             this.word.push(new Letter (letter))
@@ -26,12 +27,5 @@ function Word (word) {
     
   
 }
-
-// const testWord = new Word ('why did you do this')
-
-// testWord.populateWord()
-// console.log(testWord.displayWord())
-// testWord.guessWord('d')
-// console.log(testWord.displayWord())
 
 module.exports = Word

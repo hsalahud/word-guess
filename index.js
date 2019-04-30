@@ -2,20 +2,19 @@ const Word = require('./word.js')
 const Letter = require('./letter.js')
 const inquirer = require('inquirer')
 
+//variables generating the South Park character name
 let character
 let randomNumber
+//wordToGuess is our word Constructor
 let wordToGuess
 
-//variables blocking repetition of letters and ensuring repetition does not affect number of chances
-let preventRepetition
+//initial tries
 let chances = 5
-
-//mLetters detects repeated letter in word
-let mLetters
 
 //Variables accounting for letters used
 let alreadyUsed = []
 
+//list of character names to guess
 wordBank = [
     'Eric Cartman'.toUpperCase(),
     'Kenny McCormick'.toUpperCase(),
@@ -28,7 +27,6 @@ wordBank = [
     'Wendy'.toUpperCase(),
     'Butters'.toUpperCase(),
     'Randy'.toUpperCase()
-
 ]
 
 //This function randomly selects a character to guess.
@@ -57,7 +55,6 @@ const reset = () => {
 
 
 const playGame = () => {
-    //Begin by generating a random character
 
     inquirer.prompt([
         {
@@ -74,14 +71,15 @@ const playGame = () => {
                 //add the letter I just pressed to the array of already used letters
                 alreadyUsed.push(guess.toUpperCase())
 
-                if (chances > 0) {
-
+                //If you have chances left, then do the below
+                if (chances >= 1) {
+                    
                     wordToGuess.guessWord(guess.toUpperCase())
                     console.log(wordToGuess.displayWord())
 
                     if (!character.includes(guess.toUpperCase())) {
                         chances -= 1
-                        console.log(chances > 0 ? `Sorry, guess again. You have ${chances} tries left` : 'Sorry, guess again. This is your last try.')
+                        console.log(chances > 1 ? `Sorry, guess again. You have ${chances} tries left` : 'Sorry, guess again. This is your last try.')
                         playGame()
                     } else {
 
@@ -94,6 +92,7 @@ const playGame = () => {
                             reset()
                         }
                     }
+                    console.log(chances)
                 } else {
                     console.log('GAME OVER...you ran out of tries.')
                 }
