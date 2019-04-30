@@ -55,7 +55,7 @@ const reset = () => {
 
 
 const playGame = () => {
-
+    if (chances >= 1) {
     inquirer.prompt([
         {
             type: 'input',
@@ -72,14 +72,18 @@ const playGame = () => {
                 alreadyUsed.push(guess.toUpperCase())
 
                 //If you have chances left, then do the below
-                if (chances >= 1) {
+                
                     
                     wordToGuess.guessWord(guess.toUpperCase())
                     console.log(wordToGuess.displayWord())
 
                     if (!character.includes(guess.toUpperCase())) {
                         chances -= 1
-                        console.log(chances > 1 ? `Sorry, guess again. You have ${chances} tries left` : 'Sorry, guess again. This is your last try.')
+                        if (chances>=2){
+                            console.log(`Sorry, guess again. You have ${chances} tries left`)
+                        }else if (chances===1){
+                            console.log('Sorry, guess again. This is your last try.')
+                        }
                         playGame()
                     } else {
 
@@ -92,10 +96,6 @@ const playGame = () => {
                             reset()
                         }
                     }
-                    console.log(chances)
-                } else {
-                    console.log('GAME OVER...you ran out of tries.')
-                }
             } else {
                 //If you click on a letter you already used, you get this message
                 console.log("Letter Already Used")
@@ -104,6 +104,9 @@ const playGame = () => {
 
         })
         .catch(e => console.log(e))
+    } else {
+        console.log(`GAME OVER...you ran out of tries. The correct name was ${character}.`)
+    }
 }
 
 genCharacter()
